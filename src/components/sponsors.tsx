@@ -2,18 +2,28 @@ import Image from "next/image";
 
 const sponsors = [
   {
-    name: "Phison",
+    name: "Phison / Pascari",
     url: "https://www.phison.com/",
-    tier: "primary" as const,
-  },
-  {
-    name: "Pascari",
-    url: "https://www.phisonenterprise.com/",
-    tier: "primary" as const,
+    secondaryUrl: "https://www.phisonenterprise.com/",
+    tier: "title" as const,
   },
   {
     name: "Rocksolid Racing",
     tier: "team" as const,
+  },
+  {
+    name: "35Motorsports.com",
+    url: "https://www.35motorsports.com/",
+    tier: "sponsor" as const,
+  },
+  {
+    name: "830 Engineering",
+    tier: "sponsor" as const,
+  },
+  {
+    name: "Arai",
+    url: "https://www.araiamericas.com/",
+    tier: "sponsor" as const,
   },
 ];
 
@@ -49,24 +59,73 @@ export function Sponsors() {
           sponsors and partners. Thank you for believing in the journey.
         </p>
 
-        {/* Primary sponsors */}
-        <div className="flex flex-wrap justify-center items-center gap-12 mb-12">
+        {/* Title sponsor */}
+        {sponsors
+          .filter((s) => s.tier === "title")
+          .map((sponsor) => (
+            <div
+              key={sponsor.name}
+              className="mb-12 bg-gradient-to-br from-brand-blue/10 to-brand-orange/10 border border-white/10 rounded-xl px-10 py-10 inline-block"
+            >
+              <div className="font-heading text-xs uppercase tracking-[0.2em] text-brand-orange mb-3">
+                Title Sponsor
+              </div>
+              <div className="font-heading text-3xl md:text-4xl font-bold text-white mb-4">
+                {sponsor.name}
+              </div>
+              <div className="flex justify-center gap-4">
+                <a
+                  href={sponsor.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-gray-400 hover:text-brand-orange transition-colors"
+                >
+                  Phison &rarr;
+                </a>
+                {sponsor.secondaryUrl && (
+                  <a
+                    href={sponsor.secondaryUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-gray-400 hover:text-brand-orange transition-colors"
+                  >
+                    Pascari &rarr;
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+
+        {/* Sponsors */}
+        <div className="flex flex-wrap justify-center items-center gap-8 mb-8">
           {sponsors
-            .filter((s) => s.tier === "primary")
-            .map((sponsor) => (
-              <a
-                key={sponsor.name}
-                href={sponsor.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-white/5 border border-white/10 rounded-xl px-10 py-8
-                           hover:border-brand-orange/30 hover:bg-white/10 transition-all"
-              >
-                <span className="font-heading text-2xl md:text-3xl font-bold text-white group-hover:text-brand-orange transition-colors">
+            .filter((s) => s.tier === "sponsor")
+            .map((sponsor) => {
+              const inner = (
+                <span className="font-heading text-xl font-bold text-white group-hover:text-brand-orange transition-colors">
                   {sponsor.name}
                 </span>
-              </a>
-            ))}
+              );
+              return sponsor.url ? (
+                <a
+                  key={sponsor.name}
+                  href={sponsor.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group bg-white/5 border border-white/10 rounded-lg px-8 py-5
+                             hover:border-brand-orange/30 hover:bg-white/10 transition-all"
+                >
+                  {inner}
+                </a>
+              ) : (
+                <div
+                  key={sponsor.name}
+                  className="group bg-white/5 border border-white/10 rounded-lg px-8 py-5"
+                >
+                  {inner}
+                </div>
+              );
+            })}
         </div>
 
         {/* Team */}
