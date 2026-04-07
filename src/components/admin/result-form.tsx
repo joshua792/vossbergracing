@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { SEASON_2026 } from "@/lib/schedule";
 
 type Result = {
   id: string;
@@ -89,16 +90,20 @@ export function ResultForm({
           <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
             Track
           </label>
-          <input
-            type="text"
+          <select
             required
-            placeholder="Circuit of the Americas"
             value={form.track}
             onChange={(e) => setForm({ ...form, track: e.target.value })}
             className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white
-                       placeholder:text-gray-600
                        focus:border-brand-orange focus:ring-1 focus:ring-brand-orange/20 outline-none"
-          />
+          >
+            <option value="" disabled className="bg-brand-dark">Select a track...</option>
+            {SEASON_2026.map((round) => (
+              <option key={round.label} value={round.track} className="bg-brand-dark">
+                {round.dates} — {round.label}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 

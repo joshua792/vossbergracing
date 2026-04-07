@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { results } from "@/lib/db/schema";
 import { auth } from "@/lib/auth";
 import { desc } from "drizzle-orm";
+import { notifySubscribers, buildResultEmail } from "@/lib/notify";
 
 export async function GET() {
   const allResults = await db
@@ -30,6 +31,12 @@ export async function POST(req: Request) {
       championship: body.championship,
     })
     .returning();
+
+  // Notify subscribers (fire-and-forget, don't block the response)
+  notifySubscribers(
+    `Race Update: ${body.track}`,
+    buildResultEmail(body.track, body.qualifying, body.race1, body.race2 || null, body.championship)
+  ).catch((err) => console.error("[notify] Error:", err));
 
   return NextResponse.json(newResult, { status: 201 });
 }

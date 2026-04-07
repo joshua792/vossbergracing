@@ -6,6 +6,7 @@ import {
   integer,
   primaryKey,
   date,
+  boolean,
 } from "drizzle-orm/pg-core";
 
 // ============================================================================
@@ -54,6 +55,16 @@ export const verificationTokens = pgTable(
   },
   (table) => [primaryKey({ columns: [table.identifier, table.token] })]
 );
+
+// ============================================================================
+// Subscribers — email list for site updates
+// ============================================================================
+export const subscribers = pgTable("subscribers", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  email: text("email").notNull().unique(),
+  confirmed: boolean("confirmed").default(false).notNull(),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+});
 
 // ============================================================================
 // Race Results
