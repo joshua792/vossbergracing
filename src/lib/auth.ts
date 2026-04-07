@@ -62,7 +62,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async signIn({ user }) {
       if (!user.email) return false;
-      return allowedEmails.includes(user.email.toLowerCase());
+      const email = user.email.toLowerCase();
+      console.log("[auth] signIn check", { email, allowedEmails, raw: process.env.ADMIN_EMAILS });
+      return allowedEmails.includes(email);
     },
     async jwt({ token, user }) {
       if (user) {
