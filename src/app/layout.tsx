@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: "Reese Frankenfield | #11 MotoAmerica Talent Cup",
   description:
     "Official website of Reese Frankenfield, #11 rider in the MotoAmerica Talent Cup competing with Phison/Pascari-Rocksolid Racing.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
