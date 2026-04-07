@@ -23,9 +23,12 @@ export function ResultForm({
   onCancel: () => void;
 }) {
   const [saving, setSaving] = useState(false);
+  const initialLabel = initial
+    ? SEASON_2026.find((r) => r.track === initial.track)?.label ?? initial.track
+    : "";
   const [form, setForm] = useState({
     date: initial?.date ?? "",
-    track: initial?.track ?? "",
+    track: initialLabel,
     qualifying: initial?.qualifying ?? "",
     race1: initial?.race1 ?? "",
     race2: initial?.race2 ?? "",
@@ -36,9 +39,10 @@ export function ResultForm({
     e.preventDefault();
     setSaving(true);
 
+    const round = SEASON_2026.find((r) => r.label === form.track);
     const payload = {
       date: form.date,
-      track: form.track,
+      track: round?.track ?? form.track,
       qualifying: Number(form.qualifying),
       race1: Number(form.race1),
       race2: form.race2 ? Number(form.race2) : null,
@@ -75,6 +79,33 @@ export function ResultForm({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
+            Track
+          </label>
+          <select
+            required
+            value={form.track}
+            onChange={(e) => {
+              const track = e.target.value;
+              const round = SEASON_2026.find((r) => r.label === track);
+              setForm({
+                ...form,
+                track,
+                date: round?.startDate ?? form.date,
+              });
+            }}
+            className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white
+                       focus:border-brand-orange focus:ring-1 focus:ring-brand-orange/20 outline-none"
+          >
+            <option value="" disabled className="bg-brand-dark">Select a track...</option>
+            {SEASON_2026.map((round) => (
+              <option key={round.label} value={round.label} className="bg-brand-dark">
+                {round.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
             Date
           </label>
           <input
@@ -85,25 +116,6 @@ export function ResultForm({
             className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white
                        focus:border-brand-orange focus:ring-1 focus:ring-brand-orange/20 outline-none"
           />
-        </div>
-        <div>
-          <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
-            Track
-          </label>
-          <select
-            required
-            value={form.track}
-            onChange={(e) => setForm({ ...form, track: e.target.value })}
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white
-                       focus:border-brand-orange focus:ring-1 focus:ring-brand-orange/20 outline-none"
-          >
-            <option value="" disabled className="bg-brand-dark">Select a track...</option>
-            {SEASON_2026.map((round) => (
-              <option key={round.label} value={round.track} className="bg-brand-dark">
-                {round.dates} — {round.label}
-              </option>
-            ))}
-          </select>
         </div>
       </div>
 
