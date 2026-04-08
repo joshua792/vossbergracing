@@ -3,6 +3,8 @@ import { db } from "@/lib/db";
 import { blogPosts } from "@/lib/db/schema";
 import { auth } from "@/lib/auth";
 import { desc, eq } from "drizzle-orm";
+import { notifySubscribers, buildBlogPostEmail } from "@/lib/notify";
+import { stripHtml } from "@/lib/utils";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -35,6 +37,15 @@ export async function POST(req: Request) {
       publishedAt: body.published ? new Date() : null,
     })
     .returning();
+
+  // Notify subscribers when a post is published (fire-and-forget)
+  if (body.published) {
+    const excerpt = stripHtml(body.content).slice(0, 200);
+    notifySubscribers(
+      `New Post: ${body.title}`,
+      buildBlogPostEmail(body.title, body.slug, excerpt, body.featuredImage || null)
+    ).catch((err) => console.error("[notify] Error:", err));
+  }
 
   return NextResponse.json(newPost, { status: 201 });
 }

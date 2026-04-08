@@ -3,6 +3,8 @@ import { db } from "@/lib/db";
 import { blogPosts } from "@/lib/db/schema";
 import { auth } from "@/lib/auth";
 import { eq } from "drizzle-orm";
+import { notifySubscribers, buildBlogPostEmail } from "@/lib/notify";
+import { stripHtml } from "@/lib/utils";
 
 export async function GET(
   _req: Request,
@@ -33,6 +35,15 @@ export async function PUT(
   const { id } = await params;
   const body = await req.json();
 
+  // Check if this is a newly published post (was draft, now published)
+  const [existing] = await db
+    .select({ published: blogPosts.published })
+    .from(blogPosts)
+    .where(eq(blogPosts.id, id))
+    .limit(1);
+
+  const newlyPublished = body.published && existing && !existing.published;
+
   // If publishing for the first time, set publishedAt
   let publishedAt = body.publishedAt ? new Date(body.publishedAt) : null;
   if (body.published && !publishedAt) {
@@ -56,6 +67,16 @@ export async function PUT(
   if (!updated) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
+
+  // Notify subscribers when a draft is published for the first time
+  if (newlyPublished) {
+    const excerpt = stripHtml(body.content).slice(0, 200);
+    notifySubscribers(
+      `New Post: ${body.title}`,
+      buildBlogPostEmail(body.title, body.slug, excerpt, body.featuredImage || null)
+    ).catch((err) => console.error("[notify] Error:", err));
+  }
+
   return NextResponse.json(updated);
 }
 

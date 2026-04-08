@@ -33,6 +33,22 @@ export async function notifySubscribers(subject: string, html: string) {
   }
 }
 
+export function buildBlogPostEmail(title: string, slug: string, excerpt: string, featuredImage: string | null) {
+  return `
+    <div style="font-family: sans-serif; max-width: 520px; margin: 0 auto;">
+      <div style="background: #0a1628; padding: 24px; border-radius: 12px;">
+        <h2 style="color: #f49b11; margin: 0 0 4px;">RF11 New Blog Post</h2>
+        ${featuredImage ? `<img src="${featuredImage}" alt="${title}" style="width: 100%; border-radius: 8px; margin: 16px 0;" />` : ""}
+        <h3 style="color: #ffffff; margin: 16px 0 8px; font-size: 18px;">${title}</h3>
+        <p style="color: #9ca3af; font-size: 14px; line-height: 1.5; margin: 0 0 16px;">${excerpt}</p>
+        <p style="text-align: center; margin: 16px 0 0;">
+          <a href="https://reesefrankenfield.com/blog/${slug}" style="color: #0a1628; background: #f49b11; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px;">Read More</a>
+        </p>
+      </div>
+    </div>
+  `;
+}
+
 export function buildResultEmail(track: string, qualifying: number, race1: number, race2: number | null, championship: number) {
   return `
     <div style="font-family: sans-serif; max-width: 520px; margin: 0 auto;">
