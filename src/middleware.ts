@@ -9,6 +9,7 @@ export default auth((req) => {
   const isPublicPage =
     pathname === "/" ||
     pathname === "/results" ||
+    pathname.startsWith("/blog") ||
     pathname === "/auth/verify";
   const isLoginPage = pathname === "/login";
 

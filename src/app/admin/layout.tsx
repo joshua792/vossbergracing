@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { AdminNav } from "@/components/admin/admin-nav";
 
 export default async function AdminLayout({
   children,
@@ -42,6 +43,7 @@ export default async function AdminLayout({
           </div>
         </div>
       </header>
+      <AdminNav />
       {children}
     </div>
   );
