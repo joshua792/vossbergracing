@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { getSiteImageUrl } from "@/lib/site-images";
 
-export function About() {
+export async function About() {
+  const portraitUrl = await getSiteImageUrl("about-portrait");
+
   return (
     <section className="relative py-24 bg-brand-dark" id="about">
       {/* Subtle angular accent */}
@@ -12,7 +15,7 @@ export function About() {
           <div className="relative">
             <div className="relative aspect-[4/5] rounded-lg overflow-hidden">
               <Image
-                src="/images/reese-portrait.jpg"
+                src={portraitUrl}
                 alt="Reese Frankenfield with his #11 race bike"
                 fill
                 className="object-cover"

@@ -82,6 +82,39 @@ export const results = pgTable("results", {
 });
 
 // ============================================================================
+// Admin Users — explicit allow-list for /admin access
+// ============================================================================
+export const adminUsers = pgTable("admin_users", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  email: text("email").notNull().unique(),
+  addedBy: text("added_by"),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+});
+
+// ============================================================================
+// Sponsors — displayed on the homepage Sponsors section
+// ============================================================================
+export const sponsors = pgTable("sponsors", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: text("name").notNull(),
+  tier: text("tier").notNull(),
+  logoUrl: text("logo_url"),
+  url: text("url"),
+  displayOrder: integer("display_order").default(0).notNull(),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+});
+
+// ============================================================================
+// Site Images — admin-overridable image slots on the public site
+// ============================================================================
+export const siteImages = pgTable("site_images", {
+  key: text("key").primaryKey(),
+  url: text("url").notNull(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).defaultNow().notNull(),
+});
+
+// ============================================================================
 // Blog Posts
 // ============================================================================
 export const blogPosts = pgTable("blog_posts", {

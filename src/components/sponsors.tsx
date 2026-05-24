@@ -1,33 +1,12 @@
 import Image from "next/image";
+import { listSponsors } from "@/lib/sponsors";
 
-const sponsors = [
-  {
-    name: "Phison / Pascari",
-    url: "https://www.phison.com/",
-    secondaryUrl: "https://www.phisonenterprise.com/",
-    tier: "title" as const,
-  },
-  {
-    name: "Rocksolid Racing",
-    tier: "team" as const,
-  },
-  {
-    name: "35Motorsports.com",
-    url: "https://www.35motorsports.com/",
-    tier: "sponsor" as const,
-  },
-  {
-    name: "830 Engineering",
-    tier: "sponsor" as const,
-  },
-  {
-    name: "Arai",
-    url: "https://www.araiamericas.com/",
-    tier: "sponsor" as const,
-  },
-];
+export async function Sponsors() {
+  const all = await listSponsors();
+  const titleSponsors = all.filter((s) => s.tier === "title");
+  const regularSponsors = all.filter((s) => s.tier === "sponsor");
+  const teamSponsors = all.filter((s) => s.tier === "team");
 
-export function Sponsors() {
   return (
     <section className="relative py-24 bg-brand-dark-lighter" id="sponsors">
       {/* Top diagonal divider */}
@@ -59,56 +38,77 @@ export function Sponsors() {
           sponsors and partners. Thank you for believing in the journey.
         </p>
 
-        {/* Title sponsor */}
-        {sponsors
-          .filter((s) => s.tier === "title")
-          .map((sponsor) => (
-            <div
-              key={sponsor.name}
-              className="mb-12 bg-gradient-to-br from-brand-blue/10 to-brand-orange/10 border border-white/10 rounded-xl px-10 py-10 inline-block"
-            >
-              <div className="font-heading text-xs uppercase tracking-[0.2em] text-brand-orange mb-3">
+        {/* Title sponsors */}
+        {titleSponsors.map((sponsor) => {
+          const card = (
+            <div className="bg-gradient-to-br from-brand-blue/10 to-brand-orange/10 border border-white/10 rounded-xl px-10 py-10 inline-flex flex-col items-center gap-4">
+              <div className="font-heading text-xs uppercase tracking-[0.2em] text-brand-orange">
                 Title Sponsor
               </div>
-              <div className="font-heading text-3xl md:text-4xl font-bold text-white mb-4">
-                {sponsor.name}
-              </div>
-              <div className="flex justify-center gap-4">
+              {sponsor.logoUrl ? (
+                <div className="relative w-56 h-24">
+                  <Image
+                    src={sponsor.logoUrl}
+                    alt={sponsor.name}
+                    fill
+                    className="object-contain"
+                    sizes="224px"
+                  />
+                </div>
+              ) : (
+                <div className="font-heading text-3xl md:text-4xl font-bold text-white">
+                  {sponsor.name}
+                </div>
+              )}
+              {sponsor.url && (
+                <span className="text-sm text-gray-400">
+                  {sponsor.name} &rarr;
+                </span>
+              )}
+            </div>
+          );
+
+          return (
+            <div key={sponsor.id} className="mb-12">
+              {sponsor.url ? (
                 <a
                   href={sponsor.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-gray-400 hover:text-brand-orange transition-colors"
+                  className="inline-block group hover:opacity-90 transition-opacity"
                 >
-                  Phison &rarr;
+                  {card}
                 </a>
-                {sponsor.secondaryUrl && (
-                  <a
-                    href={sponsor.secondaryUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-gray-400 hover:text-brand-orange transition-colors"
-                  >
-                    Pascari &rarr;
-                  </a>
-                )}
-              </div>
+              ) : (
+                card
+              )}
             </div>
-          ))}
+          );
+        })}
 
         {/* Sponsors */}
-        <div className="flex flex-wrap justify-center items-center gap-8 mb-8">
-          {sponsors
-            .filter((s) => s.tier === "sponsor")
-            .map((sponsor) => {
-              const inner = (
+        {regularSponsors.length > 0 && (
+          <div className="flex flex-wrap justify-center items-center gap-8 mb-8">
+            {regularSponsors.map((sponsor) => {
+              const inner = sponsor.logoUrl ? (
+                <div className="relative h-12 w-32">
+                  <Image
+                    src={sponsor.logoUrl}
+                    alt={sponsor.name}
+                    fill
+                    className="object-contain"
+                    sizes="128px"
+                  />
+                </div>
+              ) : (
                 <span className="font-heading text-xl font-bold text-white group-hover:text-brand-orange transition-colors">
                   {sponsor.name}
                 </span>
               );
+
               return sponsor.url ? (
                 <a
-                  key={sponsor.name}
+                  key={sponsor.id}
                   href={sponsor.url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -119,30 +119,57 @@ export function Sponsors() {
                 </a>
               ) : (
                 <div
-                  key={sponsor.name}
+                  key={sponsor.id}
                   className="group bg-white/5 border border-white/10 rounded-lg px-8 py-5"
                 >
                   {inner}
                 </div>
               );
             })}
-        </div>
+          </div>
+        )}
 
         {/* Team */}
-        <div className="flex flex-wrap justify-center items-center gap-8">
-          {sponsors
-            .filter((s) => s.tier === "team")
-            .map((sponsor) => (
-              <div
-                key={sponsor.name}
-                className="bg-white/5 border border-white/5 rounded-lg px-8 py-5"
-              >
+        {teamSponsors.length > 0 && (
+          <div className="flex flex-wrap justify-center items-center gap-8">
+            {teamSponsors.map((sponsor) => {
+              const inner = sponsor.logoUrl ? (
+                <div className="relative h-10 w-28">
+                  <Image
+                    src={sponsor.logoUrl}
+                    alt={sponsor.name}
+                    fill
+                    className="object-contain opacity-80"
+                    sizes="112px"
+                  />
+                </div>
+              ) : (
                 <span className="font-heading text-lg font-bold text-gray-400">
                   {sponsor.name}
                 </span>
-              </div>
-            ))}
-        </div>
+              );
+
+              return sponsor.url ? (
+                <a
+                  key={sponsor.id}
+                  href={sponsor.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white/5 border border-white/5 rounded-lg px-8 py-5 hover:border-white/20 transition-colors"
+                >
+                  {inner}
+                </a>
+              ) : (
+                <div
+                  key={sponsor.id}
+                  className="bg-white/5 border border-white/5 rounded-lg px-8 py-5"
+                >
+                  {inner}
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         {/* CTA */}
         <div className="mt-16 bg-gradient-to-r from-brand-blue/20 to-brand-orange/20 rounded-xl p-8 border border-white/5">

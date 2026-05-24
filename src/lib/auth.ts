@@ -7,12 +7,8 @@ import {
   accounts,
   verificationTokens,
 } from "@/lib/db/schema";
+import { isAdmin } from "@/lib/admins";
 import { Resend as ResendClient } from "resend";
-
-const allowedEmails = (process.env.ADMIN_EMAILS ?? "")
-  .split(",")
-  .map((e) => e.trim().toLowerCase())
-  .filter(Boolean);
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db, {
@@ -62,7 +58,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async signIn({ user }) {
       if (!user.email) return false;
-      return allowedEmails.includes(user.email.toLowerCase());
+      return isAdmin(user.email);
     },
     async jwt({ token, user }) {
       if (user) {

@@ -1,11 +1,14 @@
 import Image from "next/image";
+import { getSiteImageUrl } from "@/lib/site-images";
 
-export function Hero() {
+export async function Hero() {
+  const backgroundUrl = await getSiteImageUrl("hero-background");
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background image */}
       <Image
-        src="/images/bike-grid.jpg"
+        src={backgroundUrl}
         alt="Reese Frankenfield #11 on the grid at Circuit of the Americas"
         fill
         className="object-cover"
