@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { rider } from "@/config/rider";
 
 export function Header() {
   const pathname = usePathname();
@@ -28,10 +29,10 @@ export function Header() {
       <nav className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
           <span className="font-heading text-2xl font-bold text-brand-orange">
-            #11
+            {rider.numberDisplay}
           </span>
           <span className="font-heading text-lg uppercase tracking-wider text-white group-hover:text-brand-orange transition-colors">
-            Reese Frankenfield
+            {rider.fullName}
           </span>
         </Link>
 

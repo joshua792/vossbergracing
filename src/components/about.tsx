@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getSiteImageUrl } from "@/lib/site-images";
+import { rider } from "@/config/rider";
 
 export async function About() {
   const portraitUrl = await getSiteImageUrl("about-portrait");
@@ -16,7 +17,7 @@ export async function About() {
             <div className="relative aspect-[4/5] rounded-lg overflow-hidden">
               <Image
                 src={portraitUrl}
-                alt="Reese Frankenfield with his #11 race bike"
+                alt={rider.images.portraitAlt}
                 fill
                 className="object-cover"
               />
@@ -36,55 +37,27 @@ export async function About() {
             </div>
 
             <h2 className="font-heading text-4xl md:text-5xl font-bold uppercase mb-6">
-              Meet <span className="text-brand-orange">Reese</span>
+              Meet <span className="text-brand-orange">{rider.firstName}</span>
             </h2>
 
             <div className="space-y-4 text-gray-300 leading-relaxed">
-              <p>
-                Hailing from Mooresville, Indiana, Reese Frankenfield is a rising
-                force in American motorcycle road racing. With a foundation built
-                on dirt track and mini-moto competition, Reese brings a raw,
-                calculated riding style to the MotoAmerica Talent Cup.
-              </p>
-              <p>
-                Competing as the #11 rider for Phison/Pascari-Rocksolid Racing,
-                Reese made an immediate impact in his inaugural 2026 Talent Cup
-                campaign, qualifying 5th and finishing 6th in both races at the
-                season opener at Circuit of the Americas.
-              </p>
-              <p>
-                Off the track, Reese is dedicated to continuous improvement,
-                studying data and refining his craft to challenge for the front
-                of the grid. His journey in the Talent Cup is just beginning.
-              </p>
+              {rider.bio.map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
             </div>
 
             {/* Stats */}
             <div className="mt-8 grid grid-cols-3 gap-4">
-              <div className="bg-white/5 rounded-lg p-4 text-center border border-white/5">
-                <div className="font-heading text-3xl font-bold text-brand-orange">
-                  #11
+              {rider.stats.map((stat) => (
+                <div key={stat.label} className="bg-white/5 rounded-lg p-4 text-center border border-white/5">
+                  <div className="font-heading text-3xl font-bold text-brand-orange">
+                    {stat.value}
+                  </div>
+                  <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">
-                  Number
-                </div>
-              </div>
-              <div className="bg-white/5 rounded-lg p-4 text-center border border-white/5">
-                <div className="font-heading text-3xl font-bold text-brand-orange">
-                  6th
-                </div>
-                <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">
-                  Championship
-                </div>
-              </div>
-              <div className="bg-white/5 rounded-lg p-4 text-center border border-white/5">
-                <div className="font-heading text-3xl font-bold text-brand-orange">
-                  TC
-                </div>
-                <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">
-                  Talent Cup
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

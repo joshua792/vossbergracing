@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getSiteImageUrl } from "@/lib/site-images";
+import { rider } from "@/config/rider";
 
 export async function Hero() {
   const backgroundUrl = await getSiteImageUrl("hero-background");
@@ -9,7 +10,7 @@ export async function Hero() {
       {/* Background image */}
       <Image
         src={backgroundUrl}
-        alt="Reese Frankenfield #11 on the grid at Circuit of the Americas"
+        alt={rider.images.heroAlt}
         fill
         className="object-cover"
         priority
@@ -21,7 +22,7 @@ export async function Hero() {
       {/* Giant #11 background element */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <span className="font-heading text-[20rem] md:text-[30rem] font-black text-white/[0.03] leading-none select-none">
-          11
+          {rider.number}
         </span>
       </div>
 
@@ -31,22 +32,22 @@ export async function Hero() {
         <div className="w-16 h-1 bg-gradient-to-r from-brand-blue to-brand-orange mx-auto mb-8" />
 
         <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-tight">
-          <span className="text-white">Reese</span>
+          <span className="text-white">{rider.firstName}</span>
           <br />
-          <span className="text-brand-orange">Frankenfield</span>
+          <span className="text-brand-orange">{rider.lastName}</span>
         </h1>
 
         <div className="mt-6 flex items-center justify-center gap-4">
           <span className="font-heading text-4xl md:text-5xl font-black text-brand-orange">
-            #11
+            {rider.numberDisplay}
           </span>
           <div className="w-px h-10 bg-white/20" />
           <div className="text-left">
             <p className="font-heading text-sm md:text-base uppercase tracking-widest text-gray-300">
-              MotoAmerica
+              {rider.series}
             </p>
             <p className="font-heading text-lg md:text-xl uppercase tracking-wider text-white">
-              Talent Cup
+              {rider.class}
             </p>
           </div>
         </div>

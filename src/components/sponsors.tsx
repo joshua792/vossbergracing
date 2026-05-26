@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { listSponsors } from "@/lib/sponsors";
+import { rider } from "@/config/rider";
 
 export async function Sponsors() {
   const all = await listSponsors();
@@ -192,10 +193,10 @@ export async function Sponsors() {
             Interested in Sponsorship?
           </h3>
           <p className="text-gray-400 text-sm mb-4">
-            Partner with a rising talent in American motorcycle racing.
+            {rider.sponsorshipBlurb}
           </p>
           <a
-            href="mailto:contact@reesefrankenfield.com"
+            href={`mailto:${rider.contactEmail}`}
             className="inline-block bg-brand-orange hover:bg-orange-500 text-white font-heading
                        uppercase tracking-wider text-sm px-8 py-3 rounded-lg transition-colors"
           >

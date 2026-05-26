@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { Providers } from "@/components/providers";
+import { rider } from "@/config/rider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -16,9 +17,8 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-  title: "Reese Frankenfield | #11 MotoAmerica Talent Cup",
-  description:
-    "Official website of Reese Frankenfield, #11 rider in the MotoAmerica Talent Cup competing with Phison/Pascari-Rocksolid Racing.",
+  title: rider.meta.title,
+  description: rider.meta.description,
   icons: {
     icon: "/favicon.svg",
   },

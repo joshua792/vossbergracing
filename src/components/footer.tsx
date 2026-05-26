@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { rider } from "@/config/rider";
 
 export function Footer() {
   const pathname = usePathname();
@@ -18,14 +19,14 @@ export function Footer() {
       <div className="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <span className="font-heading text-xl font-bold text-brand-orange">
-            #11
+            {rider.numberDisplay}
           </span>
           <span className="text-sm text-gray-500">
-            Reese Frankenfield &copy; {new Date().getFullYear()}
+            {rider.fullName} &copy; {new Date().getFullYear()}
           </span>
         </div>
         <p className="text-xs text-gray-600">
-          MotoAmerica Talent Cup &middot; Phison/Pascari-Rocksolid Racing
+          {rider.series} {rider.class} &middot; {rider.team}
         </p>
       </div>
     </footer>
