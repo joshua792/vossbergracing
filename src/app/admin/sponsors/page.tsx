@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { SponsorForm } from "@/components/admin/sponsor-form";
-import { SPONSOR_TIER_LABELS, type SponsorTier } from "@/lib/sponsors";
+import {
+  SPONSOR_TIER_LABELS,
+  type SponsorTier,
+  type LogoBackground,
+} from "@/lib/sponsors";
 import Image from "next/image";
 
 type Sponsor = {
@@ -10,6 +14,7 @@ type Sponsor = {
   name: string;
   tier: SponsorTier;
   logoUrl: string | null;
+  logoBackground: LogoBackground;
   url: string | null;
   displayOrder: number;
 };
@@ -93,7 +98,13 @@ export default function AdminSponsorsPage() {
               className="bg-white/5 border border-white/5 rounded-lg p-4 flex items-center justify-between gap-4"
             >
               <div className="flex items-center gap-4 min-w-0">
-                <div className="relative w-16 h-16 rounded bg-black/40 border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
+                <div
+                  className={`relative w-16 h-16 rounded border border-white/10 flex items-center justify-center overflow-hidden shrink-0 ${
+                    sponsor.logoBackground === "light"
+                      ? "bg-white"
+                      : "bg-black/40"
+                  }`}
+                >
                   {sponsor.logoUrl ? (
                     <Image
                       src={sponsor.logoUrl}

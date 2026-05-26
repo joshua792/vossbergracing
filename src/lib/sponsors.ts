@@ -5,10 +5,20 @@ import { asc } from "drizzle-orm";
 export const SPONSOR_TIERS = ["title", "sponsor", "team"] as const;
 export type SponsorTier = (typeof SPONSOR_TIERS)[number];
 
+export const LOGO_BACKGROUNDS = ["dark", "light"] as const;
+export type LogoBackground = (typeof LOGO_BACKGROUNDS)[number];
+
 export function isSponsorTier(value: unknown): value is SponsorTier {
   return (
     typeof value === "string" &&
     (SPONSOR_TIERS as readonly string[]).includes(value)
+  );
+}
+
+export function isLogoBackground(value: unknown): value is LogoBackground {
+  return (
+    typeof value === "string" &&
+    (LOGO_BACKGROUNDS as readonly string[]).includes(value)
   );
 }
 

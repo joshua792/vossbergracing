@@ -99,6 +99,7 @@ export const sponsors = pgTable("sponsors", {
   name: text("name").notNull(),
   tier: text("tier").notNull(),
   logoUrl: text("logo_url"),
+  logoBackground: text("logo_background").default("dark").notNull(),
   url: text("url"),
   displayOrder: integer("display_order").default(0).notNull(),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),

@@ -2,13 +2,19 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { SPONSOR_TIERS, SPONSOR_TIER_LABELS, type SponsorTier } from "@/lib/sponsors";
+import {
+  SPONSOR_TIERS,
+  SPONSOR_TIER_LABELS,
+  type SponsorTier,
+  type LogoBackground,
+} from "@/lib/sponsors";
 
 type Sponsor = {
   id: string;
   name: string;
   tier: SponsorTier;
   logoUrl: string | null;
+  logoBackground: LogoBackground;
   url: string | null;
   displayOrder: number;
 };
@@ -32,6 +38,7 @@ export function SponsorForm({
     tier: (initial?.tier ?? "sponsor") as SponsorTier,
     url: initial?.url ?? "",
     logoUrl: initial?.logoUrl ?? "",
+    logoBackground: (initial?.logoBackground ?? "dark") as LogoBackground,
     displayOrder: initial?.displayOrder ?? 0,
   });
 
@@ -63,6 +70,7 @@ export function SponsorForm({
       tier: form.tier,
       url: form.url,
       logoUrl: form.logoUrl,
+      logoBackground: form.logoBackground,
       displayOrder: Number(form.displayOrder) || 0,
     };
 
@@ -197,18 +205,59 @@ export function SponsorForm({
           />
         </div>
         {form.logoUrl && (
-          <div className="mt-3 relative w-32 h-32 rounded-lg overflow-hidden border border-white/10 bg-black/40">
-            <Image
-              src={form.logoUrl}
-              alt="Logo preview"
-              fill
-              className="object-contain p-2"
-              sizes="128px"
-            />
+          <div className="mt-3 flex items-center gap-3">
+            <div
+              className={`relative w-32 h-32 rounded-lg overflow-hidden border border-white/10 ${
+                form.logoBackground === "light" ? "bg-white" : "bg-black/40"
+              }`}
+            >
+              <Image
+                src={form.logoUrl}
+                alt="Logo preview"
+                fill
+                className="object-contain p-2"
+                sizes="128px"
+              />
+            </div>
+            <p className="text-xs text-gray-500">
+              Preview reflects the chosen background.
+            </p>
           </div>
         )}
         <p className="text-xs text-gray-500 mt-2">
           Logos are shown contained in their card (not cropped). A transparent PNG/SVG works best.
+        </p>
+      </div>
+
+      {/* Logo background */}
+      <div>
+        <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+          Logo background
+        </label>
+        <div className="flex gap-2">
+          {(["dark", "light"] as const).map((opt) => {
+            const active = form.logoBackground === opt;
+            return (
+              <button
+                key={opt}
+                type="button"
+                onClick={() =>
+                  setForm((p) => ({ ...p, logoBackground: opt }))
+                }
+                className={`text-sm px-4 py-2 rounded-lg border transition-colors capitalize ${
+                  active
+                    ? "border-brand-orange bg-brand-orange/10 text-white"
+                    : "border-white/10 bg-white/5 text-gray-400 hover:text-white"
+                }`}
+              >
+                {opt}
+              </button>
+            );
+          })}
+        </div>
+        <p className="text-xs text-gray-500 mt-2">
+          Switch to <strong>Light</strong> when the logo&apos;s colors don&apos;t show up
+          against the dark card background.
         </p>
       </div>
 

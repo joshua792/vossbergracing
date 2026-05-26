@@ -40,19 +40,24 @@ export async function Sponsors() {
 
         {/* Title sponsors */}
         {titleSponsors.map((sponsor) => {
+          const light = sponsor.logoBackground === "light";
           const card = (
             <div className="bg-gradient-to-br from-brand-blue/10 to-brand-orange/10 border border-white/10 rounded-xl px-10 py-10 inline-flex flex-col items-center gap-4">
               <div className="font-heading text-xs uppercase tracking-[0.2em] text-brand-orange">
                 Title Sponsor
               </div>
               {sponsor.logoUrl ? (
-                <div className="relative w-56 h-24">
+                <div
+                  className={`relative w-64 h-28 rounded-lg ${
+                    light ? "bg-white p-3" : ""
+                  }`}
+                >
                   <Image
                     src={sponsor.logoUrl}
                     alt={sponsor.name}
                     fill
                     className="object-contain"
-                    sizes="224px"
+                    sizes="256px"
                   />
                 </div>
               ) : (
@@ -90,14 +95,19 @@ export async function Sponsors() {
         {regularSponsors.length > 0 && (
           <div className="flex flex-wrap justify-center items-center gap-8 mb-8">
             {regularSponsors.map((sponsor) => {
+              const light = sponsor.logoBackground === "light";
               const inner = sponsor.logoUrl ? (
-                <div className="relative h-12 w-32">
+                <div
+                  className={`relative h-20 w-44 rounded ${
+                    light ? "bg-white p-2" : ""
+                  }`}
+                >
                   <Image
                     src={sponsor.logoUrl}
                     alt={sponsor.name}
                     fill
                     className="object-contain"
-                    sizes="128px"
+                    sizes="176px"
                   />
                 </div>
               ) : (
@@ -112,7 +122,7 @@ export async function Sponsors() {
                   href={sponsor.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group bg-white/5 border border-white/10 rounded-lg px-8 py-5
+                  className="group bg-white/5 border border-white/10 rounded-lg px-6 py-4
                              hover:border-brand-orange/30 hover:bg-white/10 transition-all"
                 >
                   {inner}
@@ -120,7 +130,7 @@ export async function Sponsors() {
               ) : (
                 <div
                   key={sponsor.id}
-                  className="group bg-white/5 border border-white/10 rounded-lg px-8 py-5"
+                  className="group bg-white/5 border border-white/10 rounded-lg px-6 py-4"
                 >
                   {inner}
                 </div>
@@ -133,14 +143,19 @@ export async function Sponsors() {
         {teamSponsors.length > 0 && (
           <div className="flex flex-wrap justify-center items-center gap-8">
             {teamSponsors.map((sponsor) => {
+              const light = sponsor.logoBackground === "light";
               const inner = sponsor.logoUrl ? (
-                <div className="relative h-10 w-28">
+                <div
+                  className={`relative h-14 w-36 rounded ${
+                    light ? "bg-white p-2" : ""
+                  }`}
+                >
                   <Image
                     src={sponsor.logoUrl}
                     alt={sponsor.name}
                     fill
-                    className="object-contain opacity-80"
-                    sizes="112px"
+                    className={`object-contain ${light ? "" : "opacity-80"}`}
+                    sizes="144px"
                   />
                 </div>
               ) : (
@@ -155,14 +170,14 @@ export async function Sponsors() {
                   href={sponsor.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white/5 border border-white/5 rounded-lg px-8 py-5 hover:border-white/20 transition-colors"
+                  className="bg-white/5 border border-white/5 rounded-lg px-6 py-4 hover:border-white/20 transition-colors"
                 >
                   {inner}
                 </a>
               ) : (
                 <div
                   key={sponsor.id}
-                  className="bg-white/5 border border-white/5 rounded-lg px-8 py-5"
+                  className="bg-white/5 border border-white/5 rounded-lg px-6 py-4"
                 >
                   {inner}
                 </div>

@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { sponsors } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import { isSponsorTier } from "@/lib/sponsors";
+import { isLogoBackground, isSponsorTier } from "@/lib/sponsors";
 import { revalidatePath } from "next/cache";
 
 export async function PUT(
@@ -21,6 +21,9 @@ export async function PUT(
   const tier = body.tier;
   const url = typeof body.url === "string" ? body.url.trim() : "";
   const logoUrl = typeof body.logoUrl === "string" ? body.logoUrl.trim() : "";
+  const logoBackground = isLogoBackground(body.logoBackground)
+    ? body.logoBackground
+    : "dark";
   const displayOrder = Number.isFinite(body.displayOrder)
     ? Math.trunc(body.displayOrder)
     : 0;
@@ -39,6 +42,7 @@ export async function PUT(
       tier,
       url: url || null,
       logoUrl: logoUrl || null,
+      logoBackground,
       displayOrder,
       updatedAt: new Date(),
     })
