@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { AdminNav } from "@/components/admin/admin-nav";
+import { rider } from "@/config/rider";
 
 export default async function AdminLayout({
   children,
@@ -17,7 +18,7 @@ export default async function AdminLayout({
         <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/" className="font-heading text-xl font-bold text-brand-orange">
-              #11
+              {rider.numberDisplay}
             </Link>
             <span className="text-gray-500">/</span>
             <span className="font-heading text-sm uppercase tracking-widest text-white">
@@ -48,3 +49,4 @@ export default async function AdminLayout({
     </div>
   );
 }
+

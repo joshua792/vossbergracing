@@ -1,4 +1,5 @@
 export const SEASON_2026 = [
+  { startDate: "2026-02-20", track: "Daytona International Speedway", label: "Daytona International Speedway" },
   { startDate: "2026-03-27", track: "Circuit of the Americas", label: "Circuit of the Americas (MotoGP)" },
   { startDate: "2026-04-17", track: "Michelin Raceway Road Atlanta", label: "Michelin Raceway Road Atlanta" },
   { startDate: "2026-05-15", track: "Barber Motorsports Park", label: "Barber Motorsports Park" },
@@ -10,3 +11,4 @@ export const SEASON_2026 = [
   { startDate: "2026-09-11", track: "Circuit of the Americas", label: "Circuit of the Americas (Round 2)" },
   { startDate: "2026-09-25", track: "New Jersey Motorsports Park", label: "New Jersey Motorsports Park" },
 ] as const;
+
