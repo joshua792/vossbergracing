@@ -17,7 +17,7 @@ export async function Sponsors() {
           preserveAspectRatio="none"
           className="w-full h-12 md:h-16"
         >
-          <polygon fill="#111d33" points="0,60 1440,0 1440,60" />
+          <polygon fill="#0D0D0D" points="0,60 1440,0 1440,60" />
         </svg>
       </div>
 

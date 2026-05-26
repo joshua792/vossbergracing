@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { rider } from "@/config/rider";
 
 function VerifyContent() {
   const searchParams = useSearchParams();
@@ -12,7 +13,7 @@ function VerifyContent() {
     <div className="min-h-screen bg-brand-dark flex items-center justify-center px-4">
       <div className="w-full max-w-sm text-center">
         <div className="text-6xl font-heading font-black text-brand-orange opacity-30 mb-4">
-          #11
+          {rider.numberDisplay}
         </div>
         <h1 className="font-heading text-xl text-white mb-2">
           Confirm Sign In

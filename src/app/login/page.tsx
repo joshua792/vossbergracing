@@ -3,6 +3,7 @@
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import Link from "next/link";
+import { rider } from "@/config/rider";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -32,10 +33,10 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="text-6xl font-heading font-black text-brand-orange opacity-30 mb-2">
-            #11
+            {rider.numberDisplay}
           </div>
           <h1 className="font-heading text-2xl text-white tracking-wide uppercase">
-            RF11 Admin
+            HV{rider.number} Admin
           </h1>
           <p className="text-gray-400 mt-2 text-sm">
             Sign in to manage race results.

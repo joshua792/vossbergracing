@@ -26,7 +26,7 @@ export const SITE_IMAGE_SLOTS: SiteImageSlot[] = [
     key: "about-portrait",
     page: "Home",
     location: "About section — portrait photo",
-    defaultUrl: "/images/reese-portrait.jpg",
+    defaultUrl: "/images/hank-portrait.jpg",
     aspectRatio: 4 / 5,
     aspectLabel: "4:5 portrait",
   },

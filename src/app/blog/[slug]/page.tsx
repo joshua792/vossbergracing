@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { stripHtml } from "@/lib/utils";
+import { rider } from "@/config/rider";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = stripHtml(post.content).slice(0, 160);
 
   return {
-    title: `${post.title} | Reese Frankenfield`,
+    title: `${post.title} | ${rider.fullName}`,
     description,
     openGraph: {
       title: post.title,

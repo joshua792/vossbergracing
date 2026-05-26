@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { results } from "@/lib/db/schema";
 import { desc } from "drizzle-orm";
 import { ResultsTable } from "@/components/results-table";
+import { rider } from "@/config/rider";
 
 export const dynamic = "force-dynamic";
 
@@ -25,7 +26,7 @@ export default async function ResultsPage() {
           Race <span className="text-brand-orange">Results</span>
         </h1>
         <p className="text-gray-400 mb-10">
-          MotoAmerica Talent Cup &middot; #11 Reese Frankenfield
+          {rider.series} {rider.class} &middot; {rider.numberDisplay} {rider.fullName}
         </p>
 
         {allResults.length === 0 ? (

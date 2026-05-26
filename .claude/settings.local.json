@@ -1,0 +1,37 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "command": "powershell -NoProfile -File \"C:/Users/asujo/Documents/ReeseFrankenfield/.dual-graph/stop_hook.ps1\"",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "command": "powershell -NoProfile -File \"C:/Users/asujo/Documents/ReeseFrankenfield/.dual-graph/prime.ps1\"",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "command": "powershell -NoProfile -File \"C:/Users/asujo/Documents/ReeseFrankenfield/.dual-graph/prime.ps1\"",
+            "type": "command"
+          }
+        ]
+      }
+    ]
+  }
+}

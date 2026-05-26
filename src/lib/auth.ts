@@ -19,7 +19,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     Resend({
       apiKey: process.env.RESEND_API_KEY,
-      from: "Reese Frankenfield <noreply@reesefrankenfield.com>",
+      from: "Hank Vossberg <noreply@vossbergracing.com>",
       async sendVerificationRequest({ identifier: email, url, provider }) {
         const verifyUrl = new URL(url);
         const baseUrl = `${verifyUrl.protocol}//${verifyUrl.host}`;
@@ -32,14 +32,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         await resend.emails.send({
           from: provider.from as string,
           to: email,
-          subject: "Sign in to Reese Frankenfield Admin",
+          subject: "Sign in to Hank Vossberg Admin",
           html: `
             <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto;">
-              <h2 style="color: #26509d;">Sign in to RF11 Admin</h2>
+              <h2 style="color: #D0021B;">Sign in to HV31 Admin</h2>
               <p>Click the button below to sign in.</p>
               <p>
                 <a href="${intermediateUrl}"
-                   style="display: inline-block; background: #f49b11; color: white;
+                   style="display: inline-block; background: #D0021B; color: white;
                           padding: 12px 24px; border-radius: 8px; text-decoration: none;
                           font-weight: 600;">
                   Sign In
